@@ -8,7 +8,7 @@ function square(num) {
 //Q2 - What is function expression?
 
 const square1 = function (num) {
-  //as this function has no name it is called anonyomous function ut it can be passed on any variable or can be used as callback function as well
+  //as this function has no name it is called anonyomous function but it can be passed on any variable or can be used as callback function as well
   return num * num;
 };
 
@@ -35,6 +35,8 @@ displaySquare(square);
   })(2);
 })(1); // Output will be 1 here mostly if we think this should return us as undefined as x is not present in internal IIFE but no if x is not present in internal IIFE it will search in its parent scope this happens because of closures.
 
+//Bsically first here our parent IIFE is being executed which is again returning an IIFE and this clousre IIFE is logging parent fucntion argument hence the child IIFE can access this argument from parent IIFE.
+
 //Basically for now closures are ability of a function to access variables and function which are lexically out of its scope is called closures
 
 //Q4 - Function Scope?
@@ -57,7 +59,7 @@ function getScore() {
   const num2 = 3;
 
   function add() {
-    return `${name} scored ${num1 + num2}`;
+    return `scored ${num1 + num2}`;
   }
 
   return add();
@@ -162,7 +164,7 @@ const fn = (a, x, y, ...numbers) => {
   console.log(x, y, numbers);
 }; //this will throw error as a rest parameter must be last in  a parameter list always remember this
 
-fn(5, 63, 25, 12, 144);
+fn(5, 63, 25, 12, 144); //5 63 25 [ 12, 144 ]
 
 //Q7 - Callback Function
 
@@ -182,7 +184,7 @@ anonyomous_fun = () => console.log(Hello); //This is function without declaratio
 //Q7 - Arrow Function Vs regular function
 
 // a. syntax
-// b. Implicit return keyword in arrow function if we have one liner logic we can avoid return please note if we have used {} in  arror then we have to give return otherwise we can ignore return in arrow function.
+// b. Implicit return keyword in arrow function if we have one liner logic we can avoid return please note if we have used {} in  arrow then we have to give return otherwise we can ignore return in arrow function.
 
 // c. we can use arguments in declaration function without declaraing params but same is not possible in arrow function
 
@@ -191,14 +193,14 @@ function arg() {
   console.log(arguments);
 }
 
-// arg(1, 2, 3);
+// arg(1, 2, 3); //this will execute without errors
 // (() => console.log(arguments))(1, 2, 3); //This will throw error script.js:195 Uncaught ReferenceError: arguments is not defined
 
 //d. "this" keyword
 
 let user = {
   username: "Human",
-  rc1: () => console.log("hi " + this.username), //this will return undefined as arrow function cant refer to their object from which they are being valled they refer "this" to global object hence output will be undefined
+  rc1: () => console.log("hi " + this.username), //this will return undefined as arrow function cant refer to their object from which they are being called they refer "this" to global object hence output will be undefined
   rc2() {
     console.log("hi " + this.username); //this here will be pointing to user object from which it is being called hence it is giving proper output
   },
