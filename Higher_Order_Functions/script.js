@@ -96,8 +96,7 @@ const resultForEach = arr.forEach((arr) => arr);
 console.log(resultMap, resultForEach);
 
 //map will return us a new array with modified details also on map we can also perform chaining operations like filter and reduce.
-//forEach will not return anything by its own if we want any changes
-//then we have to do change on the existing array itself refer comments
+//forEach will not return anything by its own if we want any changes then we have to do change on the existing array itself refer comments
 
 let students = [
   { name: "Piyush", marks: 80, rollNumber: 15 },
@@ -113,12 +112,18 @@ console.log(names);
 //filter
 //student details with more than 60 marks
 const marks = students.filter((stu) => {
-  if (stu.marks > 60) return stu;
+  if (stu.marks > 60) return stu; //Always rememeber here it will return the complete object if cindition satisfies it will not return anything specific for eg if we try to return stu.marks then also it will return the complete stu object only.
+
+  //The filter method in JavaScript creates a new array with all elements that pass the test implemented by the provided function. The function you provide to the filter method should return true for elements you want to keep and false for those you want to remove.
+
+  //In your case, you’re returning stu.marks which is a number, not a boolean. If stu.marks is greater than 60, it will be considered as true and the whole stu object will be included in the new array. If stu.marks is not greater than 60, undefined will be returned, which is considered as false, so those students will not be included in the new array.
+
+  //If you want to get an array of marks of the students who scored more than 60, you should use the map method instead of filter. Here’s how you can do it:
 });
 
 console.log(marks);
 
-//student details with more than 60 marks and rillNo >15
+//student details with more than 60 marks and rollNo >15
 const marksWithRollNo = students.filter(
   (stu) => stu.marks > 60 && stu.rollNumber > 15
 );
@@ -142,6 +147,7 @@ console.log(sumOfMarks);
 
 // If you want to get an array of names of students with good marks, you should use filter to get the students with good marks, and then map to get their names. Here’s how you can do it:
 
+//Wrong scenario
 // const namesWithGoodMarks = students.filter((stu) => {
 //   if (stu.marks > 60) {
 //     return stu.name;
@@ -162,6 +168,6 @@ const graceMarks = students
     return stu;
   })
   .filter((stu) => stu.marks > 60)
-  .reduce((acc, curr) => acc + curr.marks, 0);
+  .reduce((acc, curr) => acc + curr.marks, 0); //we cant dynamically pass any value for accumulator here as we r having an array of three objects and we have to provide some initial accumulator value so we have to pass 0 if the scenario would have been something like we are having an array of numbers so then we can have left the accumulator value as if we dont pass any value for accumualtor so it would take 1st element of array which will be number here but in our scenatio its an array of object and hence we have to pass 0 as accumulator value.
 
 console.log(graceMarks);
