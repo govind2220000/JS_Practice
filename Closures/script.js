@@ -46,7 +46,7 @@ subscribe(); //it will give alert as expected as display will try to find name i
 function makeFunc() {
   const name = "Mozilla";
   function displayName() {
-    console.log(name, arguments);
+    console.log(name, arguments); //here arguments will be refered from dispalyName function arguments only not from the parent function argument even if we have not passed any argument in dispalyName function then also it will not refer to parents arguments..
   }
   return displayName;
 }
@@ -85,11 +85,11 @@ function printCount() {
   console.log(count);
 }
 
-printCount();
+printCount(); //output will be 1 0
 
 // let count = 0;
 // function printCount() {
-//   console.log(count);
+//   console.log(count); // will throw error here only Cannot access 'count' before initialization
 //   let count = 1;
 // }
 
@@ -135,16 +135,16 @@ function find_closure() {
     console.log(a[index]);
   };
 }
-console.time("6");
+
 //find_closure()(6); //this also takes same time as we are executing complete thing here
 console.time("7");
 const closure = find_closure(); //but here we are doing something like caching we are storign our a array in this variable closure and internal function have scope to this array a so it can access it without recomputing.
 
 closure(6); //takes 0.1 ms to complete
 console.timeEnd("7");
-console.time("12");
+console.time("8");
 closure(12); //
-console.timeEnd("12");
+console.timeEnd("8");
 
 //Interview Question Closure(Block Scope and setTimeout)
 console.log("-----------------Block Scope and setTimeout-----------------");
@@ -197,11 +197,13 @@ c.retrieve();
 var Module = (function () {
   console.log("hello Module");
   function privateMethod() {
+    let a = 1;
     console.log("private");
+    return a;
   }
   return {
     publicMethod: function () {
-      console.log("public");
+      console.log("public" + privateMethod()); //so here we cant directly access private method using var Module but we can access private Method things using the function which is being returned just refer this example.
     },
   };
 })();
@@ -337,4 +339,4 @@ console.timeEnd("SecondCall");
 
 // When we have a function within another function then inner function is a closure this closure is usually returned so that it can use the outer function variable at a later time
 
-//Whereas a scope in javascript defines what varibale u have access to there are twp type os cope local scope and global scope and in closure we have global scope,outer scopeand local scope
+//Whereas a scope in javascript defines what varibale u have access to there are twp type of scope local scope and global scope and in closure we have global scope,outer scope and local scope
