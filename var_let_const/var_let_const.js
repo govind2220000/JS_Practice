@@ -68,7 +68,7 @@ var c2;
 console.log("--------------------Hoisitng--------------------");
 
 function abc() {
-  console.log("From function abc", a); //this will give undefined as we have redeclared a with var in this function below so it will give undefined as .
+  console.log("From function abc", a); //this will give undefined as we have redeclared a with var in this function below so it will give undefined as  In JavaScript, variable and function declarations are moved to the top of their containing scope during the compile phase, a process known as “hoisting”. However, only the declarations are hoisted, not initializationsso hence in the scoppe of function abc we have redeclared var a so it will be hoisted in top of the function scope but it has only been redeclared no reinitialized hence it logs undefined as var is hoisted with declaration and intiliazation as undefinded if we have not initialized it.
   //console.log(a, b, c); //for let and const we will get "Cannot access 'c'/'b' before initialization" due to Temporal Dead zone
 
   // The Temporal Dead Zone (TDZ) is a behavior in JavaScript that occurs with let and const variables. It’s the period between entering the scope where the variable is declared (start of the block) and the line where the declaration is actually made. During this period, any reference to the variable will result in a ReferenceError.
