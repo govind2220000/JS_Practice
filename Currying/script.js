@@ -156,4 +156,13 @@ const totalSum = curry(sum1);
 
 console.log(totalSum(2)(4)(6)(8));
 
+function name12(...args) {
+  // rest operator whenever we are passing as arguments/parameters(...)
+  console.log(args);
+}
+
+a = [1, 2, 3, 4];
+
+name12(...a); //spread operator whenever we are calling function(...)
+
 //Refer this blog https://roadsidecoder.hashnode.dev/javascript-interview-questions-currying-output-based-questions-partial-application-and-more
