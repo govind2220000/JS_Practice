@@ -91,7 +91,8 @@ function abc1() {
 
   return function inner2() {
     var a = 20;
-    inner();
+    inner(); //here this will prin a as undefined as a seperate execution context is made for each fnction and in that fucntion we are having a declared wo it will refer to that a and becauise we are trying to log that a before initializing hence its showing undefined as we know variables with type as var will be by default initialized as undefined
+    console.log(a);
   };
 }
 
