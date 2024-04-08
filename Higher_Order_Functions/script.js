@@ -91,7 +91,7 @@ const arr = [1, 2, 3, 4];
 const resultMap = arr.map((n) => n + 2);
 
 const resultForEach = arr.forEach((arr) => arr);
-//const resultForEach = arr.forEach((arr, i) => (arr[i] = arr + 2));
+//const resultForEach = arr.forEach((value, i) => (arr[i] = value + 2));
 
 console.log(resultMap, resultForEach);
 
