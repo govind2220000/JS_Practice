@@ -103,23 +103,23 @@ for (var i = 0; i < 5; i++) {
 //Also remember a very crucial part that hoisting in var and function works differently, for example if we call a var x without initializing it will give us undefined as in case of var declaration and initialiaztion both are hoisted but unless we didnt have initialized the var x with some value it will be undefined but in function it is completely hoisted(i.e completely copied in global scope) hence it will not give any undefined or something like that issue.
 
 //var with globbal scope example
-name1();
+name1(); // o/p-> Hello_name1undefined
 
 function name1() {
-  console.log("Hello_name1" + x);
+  console.log("Hello_name1" + x); //
 }
 
 var x = 20;
 
-name1();
+name1(); // o/p=> Hello_name120
 
 //var with function scope example
 name2();
 
 function name2() {
-  console.log("Hello_name2" + x1);
+  console.log("Hello_name2" + x1); //Hello_name2undefined
   var x1 = 20;
-  console.log("Hello_name2" + x1);
+  console.log("Hello_name2" + x1); //Hello_name220
 }
 
 //Interview Question on Function Hoisting
@@ -131,7 +131,7 @@ var fun = function () {
   var x1 = 20;
 };
 
-fun(); //Output for this will be undefined as it creates a seperate execution context for function/local scope so here in global scope it has 21 but in function scope as we are reinitializing it will be undefined as we are initializing it after logging. Always remember if we have reinitialized/redeclared a global scoped var(var/let) again inside  a functional scope so it will check for functional scope var
+fun(); //Output for this will be undefined as it creates a seperate execution context for function/local scope so here in global scope it has 21 but in function scope as we are reinitializing it will be undefined as we are initializing it after logging. Always remember if we have reinitialized/redeclared a global scoped var(var/let/const) again inside  a functional scope so it will check for functional scope var
 
 //The below example will thorw error as we are using let here  script.js:137 Uncaught ReferenceError: Cannot access 'a1' before initialization
 // let a1 = 2000;
