@@ -8,7 +8,7 @@
 var uname = "Hello JS"; //This is global scope
 function local() {
   //This is local scope
-  console.log(uname);
+  console.log(uname); //Hello JS
 }
 local();
 
@@ -152,7 +152,7 @@ for (var i = 0; i < 3; i++) {
   console.log(i);
   setTimeout(() => console.log(i), 1000);
 }
-//output here will be 3 three time as var type has function scope and not block scope so in last iteration var i will be 3 but it wont go inside as it doesnt satisfies the condition i<3 so the final value of i = 3 and hence as we know setTimeout is async so it will run only after the complete code execution and at the time of execution it will refer the current value if i which is 3 hence it gives output as 3 three times.
+//output here will be 3 three time as var type has function scope and not block scope so in last iteration var i will be 3 but it wont go inside as it doesnt satisfies the condition i<3 so the final value of i = 3 and hence as we know setTimeout is async so it will run only after the complete code execution and at the time of execution it will refer the current value of i which is 3 hence it gives output as 3 three times.
 
 //So to solve this problem we can use let instead of var as it has block scope so for each iteration current value of i will be stored for e.g for 1st iteration i will be 0 and so on and then when the complete code is executed and async setTimeout runs so then it will refer to i value which was there for that particular iteration i.e for 1st iteration i was 0 so it will refer i as 0 for that particular timeout.
 
@@ -272,8 +272,10 @@ isSub();
 
 function once(func, context) {
   let ran;
+  console.log("1213123", func);
   return function () {
     //always remember if we create an arrow fucntion here it will not work as expected as hoisting is different in case of arrow fnction
+    console.log(arguments);
     if (func) {
       ran = func.apply(context || this, arguments);
       func = null;
