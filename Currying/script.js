@@ -135,14 +135,14 @@ function curry(func) {
   console.log("Funct length:" + func.length); //func.length gives the length of params/no.of arguments passed
   return function curriedFunction(...args) {
     //(2)(4)(6)(8) are the arguments and ...args will takes arguments as one by one like first 2 and so on.
-    console.log("Args length:" + args.length); //here
-    console.log("Args are:" + args);
+    console.log("Args length:", args.length); //here
+    console.log("Args are:", args);
     if (args.length >= func.length) {
       return func(...args);
     } else {
       return function (...next) {
-        console.log("Args are:" + args);
-        console.log("next are:" + next);
+        console.log("Args are:", args);
+        console.log("next are:", next);
         return curriedFunction(...args, ...next);
       };
     }
