@@ -15,7 +15,7 @@ delete user.name;
 console.log("Before deleting " + user.name);
 
 const func = (function (a) {
-  delete a; //this will not delete the value from a delete keyword will only delete values from objects
+  delete a; //this will not delete the value from a ,delete keyword will only delete values from objects
   return a;
 })(5);
 
@@ -30,8 +30,8 @@ const property = "firstName";
 const name = "GC";
 
 const obj1 = {
-  property: name, //this will give o/p as property:GC we didnt get the property variable value
-  [property]: name, // this will give us the property variable value
+  property: name, //this will give o/p as property:GC we didnt get the property variable value which is "firstName"
+  [property]: name, // this will give us the property variable value which is "firstName"
 };
 console.log(obj1);
 
@@ -133,7 +133,7 @@ const shape = {
   perimeter: () => 2 * Math.PI * this.radius, //This function is declared without keyword function so it doesnt have access to its object instance variables i.e radius hence this.radius is undefined and op will be NaN becoz the arrow function refers this as global window object and there its not able to find any radius property hence undefined.
 };
 
-console.log(shape.diameter()); //output
+console.log(shape.diameter()); //output is 100
 console.log(shape.perimeter()); //Nan
 
 console.log(`---------------object Inteview Q9---------------`);
@@ -191,7 +191,7 @@ console.log(d.gretting); //this will also print Hello Sir only as both c and d v
 console.log(`---------------object Inteview Q12---------------`);
 //Guess the output (Object Referencing)
 console.log({ a: 1 } == { a: 1 }); // here also o/p will be false as both the objects are in different memory location if we have used with variable same as in above example then it would have been same as both of them will be pointing to same memory location
-console.log({ a: 1 } === { a: 1 }); //This condition will always return since JavaScript compares objects by reference, not value.
+console.log({ a: 1 } === { a: 1 }); //This condition will always return false since JavaScript compares objects by reference, not value.
 
 console.log(`---------------object Inteview Q13---------------`);
 //Guess the output (Object Referencing)
@@ -238,7 +238,7 @@ multiply(value); //so in previous value was 20 so now it will be 40 sor both val
 
 let person11 = { name: "Lydia", age: 24 };
 
-let person22 = { ...person1 }; //this will clone the data hence both will person1 and person2 will be pointing to different memory locations
+let person22 = { ...person11 }; //this will clone the data hence both will person1 and person2 will be pointing to different memory locations
 
 console.log(person11 == person22);
 console.log(person22 === person22);
@@ -249,7 +249,7 @@ function changeAgeAndReference(person) {
   //here the argument person has access to memory location of variable perosn21
   person.age = 25; //here it will change the property value as (person21) is argument here and it will change the value at memory level
   person = {
-    //here we have reassigning the value of person ut main object is still present so person21 will still have access to that memory but in above line we have update age property in emmory location keep this is mind
+    //here we are reassigning the value of person the person21 main object is still present so person21 will still have access to that memory but in above line we have update age property in memory location keep this is mind and hence person21 will have access to its location and person argument in case of this function will be pointing to a a new memory location
     name: "John",
     age: 50,
   };
