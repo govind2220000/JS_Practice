@@ -129,15 +129,265 @@ const message = importantAction("Govind")
 console.log("--------------------------------------------------");
 console.log("stop");
 
-//Promise Combinator
+//Promise Combinators
 
+// a.Promise.all
 //Remember if even one promise fails the complete chain will fail
 console.log("--------------------------------------------------");
 console.log("Promise start");
 
 Promise.all([importantAction("Govind"), greet("Whats up")])
-  .then((res) => console.log(res))
+  .then((res) => console.log("Promise all Combinator", res))
   .catch((err) => console.log(err));
 
 console.log("--------------------------------------------------");
 console.log("stop");
+
+// b. Promise.race
+//Here it will only return the promise which will be resolved first
+console.log("--------------------------------------------------");
+console.log("Promise start");
+
+Promise.race([importantAction("Govind"), greet("Whats up")])
+  .then((res) => console.log("From race combinator", res))
+  .catch((err) => console.log("From race combinator", err));
+
+console.log("--------------------------------------------------");
+console.log("stop");
+
+// c. Promise.allSettled
+//Here it will return all the resolved promises suppose if a promise fails also then also it will return the promises that were resolved
+console.log("--------------------------------------------------");
+console.log("Promise start");
+
+Promise.allSettled([importantAction("Govind"), greet("Whats up")])
+  .then((res) => console.log("From allSettled combinator", res))
+  .catch((err) => console.log("From allSettled combinator", err));
+
+console.log("--------------------------------------------------");
+console.log("stop");
+
+// d. Promise.any
+//Here it will return the last resolved promise i.e. suppose we were having three promises after a certain timeout so the last promise which ot resolved it will return that only suppose if all promise fails also then also it will throw error
+console.log("--------------------------------------------------");
+console.log("Promise start");
+
+Promise.any([importantAction("Govind"), greet("Whats up")])
+  .then((res) => console.log("From any combinator", res))
+  .catch((err) => console.log("From any combinator", err));
+
+console.log("--------------------------------------------------");
+console.log("stop");
+
+//Async await
+
+const result = async () => {
+  console.log("--------------------------------------------------");
+  console.log("Async Promise start");
+  const msg1 = await importantAction("From Async Await msg1");
+  console.log(msg1);
+  const msg2 = await importantAction("From Async Await msg2");
+  console.log(msg2);
+  console.log("--------------------------------------------------");
+  console.log("Async stop");
+};
+
+result();
+
+//Q2 - Whats the output
+
+console.log("Q2 start");
+
+const promise1 = new Promise((resolve, reject) => {
+  console.log(1); //this will be logged after the Q1 start because javascript always executes the synchronous code first so here while we are creating our Promsise it will check whether there is any synchronous code present or not so if present it will execute that first
+  resolve(2); //If suppose this resolve is not there so promise1.then will never be called keep this in mind
+  console.log(3); //this will be alos executed right after console.log(1) since this is also synchronous code
+});
+
+promise1.then((res) => {
+  //and this will be ignored initially as we are calling .then on an promise object so it will be executed later after the complete synchronos code is executed
+  console.log("Q2 Promise", res);
+});
+
+console.log("Q2 end");
+
+//OP sequence for above question will be  Q2 start, 1, 3, Q2 end, Q2 Promise 2
+
+//Q3 - Whats the output
+
+console.log("Q3 start");
+const fn = () => {
+  return new Promise((resolve, reject) => {
+    console.log(1);
+    resolve("success");
+  });
+};
+
+console.log("middle");
+
+fn().then((res) => {
+  console.log("Q3 success", res);
+});
+
+console.log("Q3 end");
+//OP sequence for above question will be  Q3 start, middle, 1, Q3 end, Q3 success success
+
+//Q4- Whats the output
+
+console.log("Q4 start");
+function job() {
+  return new Promise(function (resolve, reject) {
+    reject();
+  });
+}
+
+let promise = job();
+
+promise
+  .then(function () {
+    console.log("Success 1");
+  })
+  .then(function () {
+    console.log("Success 2");
+  })
+  .catch(function () {
+    console.log("Error 1");
+  })
+  .then(function () {
+    console.log("Success 3"); //Always remember after the catch if there is any .then so that will also be executed
+  });
+
+console.log("Q4 end");
+//OP sequence for above question will be  Error 1 , Success 3
+
+//Q5- Whats the output
+
+console.log("Q5 start");
+
+function job1(state) {
+  return new Promise(function (resolve, reject) {
+    if (state) {
+      resolve("success");
+    } else {
+      reject("error");
+    }
+  });
+}
+
+let promise2 = job1(true);
+
+promise2
+  .then(function (data) {
+    console.log("Q5", data);
+    return job1(false);
+  })
+  .catch(function (error) {
+    console.log("Q5", error);
+    return "Error Caught"; //this string will be treated as true in if ellse in JavaScript
+  })
+  .then(function (data) {
+    console.log("Q5", data);
+    return job1(true);
+  })
+  .catch((error) => {
+    console.log("Q5", error);
+  });
+console.log("Q5 end");
+
+// OP sequence for the above question Q5 success
+//                                    Q5 error
+//                                    Q5 Error Caught
+
+console.log("Q6 start");
+
+function job2(state) {
+  return new Promise(function (resolve, reject) {
+    if (state) {
+      resolve("success");
+    } else {
+      reject("error");
+    }
+  });
+}
+
+let promise3 = job2(true);
+
+promise3
+  .then(function (data) {
+    console.log("Q6", data);
+    return job2(true);
+  })
+  .then(function (data) {
+    if (data !== "victory") {
+      throw "Defeat"; //on this line we are throwing an error hence it will go to the next catch available
+    }
+    return job2(true);
+  })
+  .then(function (data) {
+    console.log("Q6.", data);
+  })
+  .catch(function (error) {
+    console.log("Q6", error);
+    return job2(false); //this string will be treated as true in if ellse in JavaScript
+  })
+  .then(function (data) {
+    console.log("Q6", data);
+    return job2(true);
+  })
+  .catch((error) => {
+    console.log("Q6", error);
+    return "Error Caught";
+  })
+  .then(function (data) {
+    console.log("Q6", data);
+    return new Error("test"); //Not returning a promise ////Not returning a promise //On this line we are not throwing an error as we are returning an error object hence it will go to the next then available.
+  })
+  .then(function (data) {
+    console.log("Success:", data.message);
+  })
+  .catch(function (data) {
+    console.log("Error", data.message);
+  });
+
+//success success
+console.log("Q6 end");
+
+//Q7 Create a first promise which resolves by "First" then create a second promise which gets resolved by the first promise which was created earlier and finally it should return the "First" text
+
+const promise11 = new Promise((resolve, reject) => {
+  resolve("First");
+});
+
+const promise12 = new Promise((resolve, reject) => {
+  resolve(promise11);
+});
+
+promise12.then((res) => console.log(res));
+
+//Q8 Need to rewrite a code using async await
+
+async function loadJson(url) {
+  let response = await fetch(url);
+  if (response.status == 200) {
+    let json = await response.json();
+    return json;
+  }
+  throw new Error(response.status);
+}
+
+// loadJson("https://fakeurl.com/no-such-user.json").catch((err) => {
+//   console.log(err);
+// });
+
+//Q9 Solve Promise Recursively
+
+function promRecurse(funcPromises) {
+  if (funcPromises.length == 0) return;
+
+  currPromise = funcPromises.shift(); //shifts the element by 1
+  currPromise.then((res) => console.log(res)).catch((err) => console.log(err));
+
+  promRecurse(funcPromises);
+}
+
+promRecurse([importantAction("Recursive promise"), greet("Question Solved")]);
