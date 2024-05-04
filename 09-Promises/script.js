@@ -391,3 +391,19 @@ function promRecurse(funcPromises) {
 }
 
 promRecurse([importantAction("Recursive promise"), greet("Question Solved")]);
+
+//Q10 - Promise Polyfill Implementation
+
+//A promise looks like below
+
+// let promise111 = new Promise((resolve, reject) => setTimeout(() => resolve(100), 3000));
+
+// // tasks to be completed after promise resolution
+
+// promise111.then((val) => console.log(val)).catch(err => console.log(err));
+
+//Promise Polyfill implement starts
+
+new PromisePolyFill((resolve) => setTimeout(() => resolve(1000), 1000)).then(
+  (val) => console.log(val)
+);
