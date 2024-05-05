@@ -404,6 +404,141 @@ promRecurse([importantAction("Recursive promise"), greet("Question Solved")]);
 
 //Promise Polyfill implement starts
 
-new PromisePolyFill((resolve) => setTimeout(() => resolve(1000), 1000)).then(
-  (val) => console.log(val)
-);
+// function PromisePolyFill(executor) {
+
+//   let onResolve;
+
+//   function resolve(val) {
+//     onResolve(val);
+//   }
+
+//   this.then = function(callback) {
+//       onResolve = callback;
+//       return this;
+//   };
+
+//   this.catch = function(callback) {
+//       return this;
+//   }
+
+//   executor(resolve);
+// }
+
+// // you can test in case of asynchronous operation
+
+// new PromisePolyFill((resolve) => setTimeout(() => resolve(1000), 1000)).then(val => console.log(val));
+
+// Now the above will work if we have a delay but what if we have a synchronous operation and the executor is synchronous
+
+// new PromisePolyFill((resolve) => resolve(1000)).then(val => console.log(val))
+
+// it will give TypeError: onResolve is not a function
+
+//Basically when there is no delay then it quickly calls resolve function but the issue is onResolve doesnt gets register with .then(callback) hence its just a normal variable for now and since we are callong inside resolve function it throws onResolve is not a function
+
+//Example for understanding why we have to return this
+
+// function a(){
+
+//   this.a = (val)=>{
+//     console.log(val)
+//     return this
+//   }
+//   this.b = (val)=>{
+//     console.log(val)
+//   }
+// }
+
+// new a().a(12).b(15)
+
+// Output:
+
+// 12
+// 15
+
+function PromisePolyFill(executor) {
+  let onResolve,
+    onReject,
+    fulfilled = false,
+    rejected = false,
+    called = false,
+    value;
+
+  function resolve(v) {
+    fulfilled = true;
+    value = v;
+
+    if (typeof onResolve === "function") {
+      // for async
+      console.log("inside resolve");
+      try {
+        onResolve(value);
+        called = true;
+      } catch (error) {
+        console.log(onReject);
+        onReject(error);
+        called = true;
+      }
+    }
+  }
+
+  function reject(reason) {
+    rejected = true;
+    value = reason;
+
+    if (typeof onReject === "function") {
+      onReject(value);
+      called = true;
+    }
+  }
+
+  this.then = function (callback) {
+    console.log("inside then");
+    onResolve = callback;
+
+    if (fulfilled && !called) {
+      // for sync
+      console.log("inside then condition");
+      called = true;
+      onResolve(value);
+    }
+    return this;
+  };
+
+  this.catch = function (callback) {
+    console.log("inside catch");
+    onReject = callback;
+
+    if (rejected && !called) {
+      console.log("inside then condition");
+      called = true;
+      onReject(value);
+    }
+    return this;
+  };
+
+  try {
+    executor(resolve, reject);
+  } catch (error) {
+    reject(error);
+  }
+}
+
+const promise111 = new PromisePolyFill((resolve, reject) => {
+  console.log(1);
+  setTimeout(() => {
+    resolve(2);
+  }, 1000);
+  console.log(3);
+});
+
+promise111
+  .then((res) => {
+    console.log(res);
+    throw "test";
+  })
+  .catch(() =>
+    setTimeout(() => {
+      console.log(200);
+    }, 1000)
+  ); //catch(res => console.log(res + " catch"));
