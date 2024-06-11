@@ -98,3 +98,27 @@ function abc1() {
 
 let fn = abc1();
 fn();
+
+// var a = 5; // Global scope
+
+// function abc1() {
+//   var a = 10; // 'a' in abc1 scope
+//   console.log(a); // Logs '10', refers to 'a' in abc1 scope
+
+//   function inner() {
+//     console.log("From inner 1", a); // 'a' is not declared in this scope, so it refers to 'a' in abc1 scope
+//   }
+
+//   return function inner2() {
+//     var a = 20; // 'a' in inner2 scope
+//     inner(); // When called, 'inner' refers to 'a' in abc1 scope
+//     console.log(a); // Logs '20', refers to 'a' in inner2 scope
+//   };
+// }
+
+// let fn = abc1();
+// fn();
+
+// When the inner function is called, it doesn’t have a local variable a declared, so it looks up the scope chain. It first looks in the inner2 scope, but inner2 also has its own a variable. However, the inner function does not have access to this a because inner was not defined inside inner2, it was defined inside abc1. So it continues up the scope chain to the abc1 scope, where it finds an a variable. That’s why it logs 10, the value of a in the abc1 scope.
+
+// This is a fundamental aspect of JavaScript known as lexical scoping: a function’s scope is determined by where it is defined, not where it is called
