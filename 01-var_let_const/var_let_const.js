@@ -52,7 +52,7 @@ function IllegalShadowing() {
   //Basically we can shadow the var with let/const but vice versa is not possible i.e. we cant shadow let/const with var it will throw error
   if (true) {
     let b = "Hii";
-    //var a = "hoo" It will throw error as it is illegal shadowing as we are trying to shadow let/const with var
+    //var a = "hoo" It will throw error as it is illegal shadowing as we are trying to shadow let/const with var because var is function-scoped, JavaScript interprets this as you trying to redeclare the same variable b, which is not allowed when the original variable was declared with let or const. This is why you’re getting an error. We can correct it by using let or const instead of var as let and const have block scope so a new b can exist within the if block without conflicting with the b in the outer scope 
 
     console.log(a, b);
   }
