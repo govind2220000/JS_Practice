@@ -181,12 +181,38 @@ console.log(clone);
 
 //Implement factorial of a number using recursive function
 
-function fact(num){
-  if(num === 1 || num === 0){
-    return 1
+function fact(num) {
+  if (num === 1 || num === 0) {
+    return 1;
   }
 
-  return num * fact(num - 1)
+  return num * fact(num - 1);
 }
 
-console.log(fact(5))
+console.log(fact(5));
+
+// 5. Implement a function that takes two sorted arrays and merges them into a single sorted array without using any built-in sorting functions.
+function mergeArray(arr1, arr2) {
+  return [...arr1, ...arr2].sort((a, b) => a - b);
+}
+console.log(mergeArray([1, 2, 3], [1, 5, 1]));
+
+// 6. Write a function that checks if a given string is a palindrome,
+// considering only alphanumeric characters and ignoring case.
+function alphanumericPalindrome(str) {
+  if (
+    str
+      .replace(/[^a-zA-Z0-9]/g, "")
+      .toLowerCase()
+      .split("")
+      .reverse()
+      .join("") === str.replace(/[^a-zA-Z0-9]/g, "").toLowerCase()
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+console.log(alphanumericPalindrome("A2a1"));
+console.log(alphanumericPalindrome("A2a@$"));
